@@ -1,9 +1,11 @@
 <script setup>
 import { ref } from "vue"
 import { Send, Upload, FileText } from "lucide-vue-next"
-import {ElMessage} from "element-plus"
-import { useRouter} from "vue-router"
-const router = useRouter();
+import { ElMessage } from "element-plus"
+import { useRouter } from "vue-router"
+
+const router = useRouter()
+
 const form = ref({
   name: "",
   phone: "",
@@ -19,24 +21,51 @@ const handleFileUpload = (e) => {
 }
 
 const handleSubmit = () => {
-  console.log("Yuborilayotgan ma’lumotlar:", form.value)
-  ElMessage.success('Arizangiz muvoffaqiyatli yuborildi')
-  router.go(-1)
+  // LocalStorage-dan mavjud arizalarni olish
+  const existingApplications = JSON.parse(localStorage.getItem("applications") || "[]")
+
+  // Yangi arizani yaratish
+  const newApplication = {
+    id: Date.now(),
+    ...form.value,
+    fileName: form.value.file ? form.value.file.name : null,
+  }
+
+  // Arizani massivga qo‘shish
+  existingApplications.push(newApplication)
+
+  // LocalStorage-ga saqlash
+  localStorage.setItem("applications", JSON.stringify(existingApplications))
+
+  // Foydalanuvchiga xabar
+  ElMessage.success("Arizangiz muvaffaqiyatli yuborildi! 🎉")
+
+  // Formani tozalash
+  form.value = {
+    name: "",
+    phone: "",
+    email: "",
+    position: "",
+    department: "",
+    file: null,
+    message: "",
+  }
+
+  // Oldingi sahifaga qaytish
+  setTimeout(() => router.go(-1), 1000)
 }
 </script>
 
 <template>
   <section class="container mx-auto py-14 px-4">
     <div class="text-center mb-10">
-      <h2 class="text-3xl font-bold text-gray-900">📨 Ariza topshirish</h2>
-      <p class="text-gray-500 mt-2 max-w-2xl mx-auto">
+      <h2 class="text-3xl font-bold text-white">📨 Ariza topshirish</h2>
+      <p class="text-gray-300 mt-2 max-w-2xl mx-auto">
         Quyidagi formani to‘ldiring. Biz siz bilan tez orada bog‘lanamiz.
       </p>
     </div>
 
-    <div
-      class="max-w-3xl mx-auto !bg-[#2f2f2f] shadow-lg rounded-2xl p-8 border border-gray-100"
-    >
+    <div class="max-w-3xl mx-auto !bg-[#2f2f2f] shadow-lg rounded-2xl p-8 border border-gray-100">
       <form @submit.prevent="handleSubmit" class="space-y-6">
         <!-- Ism -->
         <div>

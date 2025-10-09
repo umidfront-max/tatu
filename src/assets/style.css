@@ -1,5 +1,14 @@
 @import 'tailwindcss';
 
+.input {
+  @apply w-full border border-gray-700 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:outline-none;
+}
+.btn-primary {
+  @apply text-white px-4 py-2 rounded-lg transition;
+}
+.btn-secondary {
+  @apply px-4 py-2 rounded-lg transition;
+}
 @theme {
   --color-green-400: #56ca81;
   --color-black-800: #171717; /* endi bg-black-800 ishlaydi */
@@ -7,7 +16,7 @@
   --color-black-600: #292929; /* endi bg-black-700 ishlaydi */
   --color-white-900: #f9f9f9; /* endi bg-black-700 ishlaydi */
   --color-gray-400: #808080; /* endi bg-black-700 ishlaydi */
-  --color-gray-500: #4F4F4F; /* endi bg-black-700 ishlaydi */
+  --color-gray-500: #4f4f4f; /* endi bg-black-700 ishlaydi */
   --color-origin-400: #ff9736; /* endi bg-black-700 ishlaydi */
   --color-red-400: #da5752; /* endi bg-black-700 ishlaydi */
 

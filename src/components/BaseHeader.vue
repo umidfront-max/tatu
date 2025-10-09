@@ -127,6 +127,7 @@ function handleRoute(item) {
       <div class="flex gap-2 items-center">
         <!-- Til tugmasi -->
         <button
+         @click="router.push('/login')"
           class="px-4 py-2 rounded-2xl text-white bg-green-600 hover:bg-green-500 transition-colors max-xl:text-xs"
         >
           Tizimga kirish

@@ -1,8 +1,10 @@
 <script setup>
+import { ref, onMounted } from 'vue'
 import router from '@/router'
 import { Briefcase, Clock, MapPin, DollarSign, GraduationCap } from 'lucide-vue-next'
 
-const vacancies = [
+// 🔹 Default vakansiyalar
+const defaultVacancies = [
   {
     id: 1,
     title: 'Frontend dasturchi',
@@ -32,6 +34,15 @@ const vacancies = [
     degree: 'Axborot markazi',
   },
 ]
+
+// 🔹 Reactive ro‘yxat
+const vacancies = ref([])
+
+// 🔹 LocalStorage’dan o‘qish
+onMounted(() => {
+  const saved = localStorage.getItem('vacancies')
+  vacancies.value = saved ? JSON.parse(saved) : defaultVacancies
+})
 </script>
 
 <template>
@@ -42,33 +53,33 @@ const vacancies = [
       <div
         v-for="(v, i) in vacancies"
         :key="i"
-        class="!bg-[#2f2f2f] rounded-2xl shadow-lg hover:shadow-xl duration-300 p-6 border border-gray-100 flex flex-col justify-between"
+        class="!bg-[#2f2f2f] rounded-2xl shadow-lg hover:shadow-xl duration-300 p-6 border border-gray-700 flex flex-col justify-between"
       >
         <div>
           <h3 class="text-xl font-semibold !text-white mb-2 flex items-center gap-2">
             <Briefcase class="w-5 h-5 text-blue-600" />
             {{ v.title }}
           </h3>
-          <p class="text-sm text-white !mb-4">
+          <p class="text-sm text-white/80 mb-4">
             {{ v.description }}
           </p>
         </div>
 
-        <div class="!space-y-2 text-sm text-white">
+        <div class="space-y-2 text-sm text-white/90">
           <div class="flex items-center gap-2">
-            <Clock class="w-4 h-4 text-indigo-500" />
+            <Clock class="w-4 h-4 text-indigo-400" />
             <span>{{ v.time }}</span>
           </div>
           <div class="flex items-center gap-2">
-            <DollarSign class="w-4 h-4 text-green-500" />
+            <DollarSign class="w-4 h-4 text-green-400" />
             <span>{{ v.salary }}</span>
           </div>
           <div class="flex items-center gap-2">
-            <MapPin class="w-4 h-4 text-red-500" />
+            <MapPin class="w-4 h-4 text-red-400" />
             <span>{{ v.location }}</span>
           </div>
           <div class="flex items-center gap-2">
-            <GraduationCap class="w-4 h-4 text-purple-500" />
+            <GraduationCap class="w-4 h-4 text-purple-400" />
             <span>{{ v.degree }}</span>
           </div>
         </div>
@@ -85,7 +96,9 @@ const vacancies = [
 </template>
 
 <style scoped>
-.container {
-  max-width: 1200px;
+section {
+  background-color: #000; /* Asosiy fon qora */
+  min-height: 100vh;
+  padding: 2rem;
 }
 </style>
